@@ -8,8 +8,11 @@
 #include <kern/console.h>
 #include <kern/pmap.h>
 #include <kern/kclock.h>
+
 #include <kern/env.h>
 #include <kern/trap.h>
+
+
 
 
 void
@@ -31,6 +34,7 @@ i386_init(void)
 	// Lab 2 memory management initialization functions
 	mem_init();
 
+
 	// Lab 3 user environment initialization functions
 	env_init();
 	trap_init();
@@ -45,6 +49,11 @@ i386_init(void)
 
 	// We only have one user environment for now, so just run it.
 	env_run(&envs[0]);
+
+	// Drop into the kernel monitor.
+	while (1)
+		monitor(NULL);
+
 }
 
 
